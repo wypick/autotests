@@ -17,6 +17,7 @@ namespace TestRest.Steps
         public string Data;
         public HttpResponseMessage response;
         public string addedPet;
+        public string addedOrder;
 
         [Given(@"add pet with status ""(.*)""")]
         public void GivenAddPetWithStatus(string status)
@@ -66,15 +67,18 @@ namespace TestRest.Steps
         [Given(@"check deleted pet")]
         public void GivenCheckDeletedPet()
         {
-             try
-             {
-                 response = Api.Get(Api.GetUri(Api.getPet + Pets.pet.Id));
-             }
-             catch (Exception) { }
-             finally
-             {
-                 throw new Exception($"Животное: id {Pets.pet.Id} не удалено");
-             }
+            try
+            {
+                response = Api.Get(Api.GetUri(Api.getPet + Pets.pet.Id));
+                throw new Exception("error");
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "error")
+                {
+                    throw new Exception($"Животное: id {Store.order.id} не удалено");
+                }
+            }
         }
 
         [Given(@"update pet")]
@@ -83,13 +87,54 @@ namespace TestRest.Steps
             Data = JsonSerializer.Serialize(Pets.UpdatePet()).ToLower();
             response = Api.Put(Api.GetUri(Api.addPet), Data);
             addedPet = response.Content.ReadAsStringAsync().Result;
-            Console.Write(addedPet);
         }
 
         [Given(@"delete pet")]
         public void GivenDeletePet()
         {
             response = Api.Delete(Api.GetUri(Api.getPet+Pets.pet.Id));
+        }
+
+        [Given(@"create order")]
+        public void GivenCreateOrder()
+        {
+            Data = JsonSerializer.Serialize(Store.GetOrder(Pets.pet.Id));
+            response = Api.Post(Api.GetUri(Api.addOrder), Data);
+            addedOrder = response.Content.ReadAsStringAsync().Result;
+        }
+
+        [Given(@"check order")]
+        public void GivenCheckOrder()
+        {
+            response = Api.Get(Api.GetUri(Api.getOrder + Store.order.id));
+
+            if (!response.Content.ReadAsStringAsync().Result.Equals(addedOrder))
+            {
+                throw new Exception($"Заказ: id {Store.order.id} не равен {response.Content.ReadAsStringAsync().Result}");
+            }
+        }
+
+        [Given(@"delete order")]
+        public void GivenDeleteOrder()
+        {
+            response = Api.Delete(Api.GetUri(Api.getOrder + Store.order.id));
+        }
+
+        [Given(@"check deleted order")]
+        public void GivenCheckDeletedOrder()
+        {
+            try
+            {
+                response = Api.Get(Api.GetUri(Api.getOrder + Store.order.id));
+                throw new Exception("error");
+            }
+            catch (Exception e) {
+               if (e.Message == "error")
+                {
+                    throw new Exception($"Заказ: id {Store.order.id} не удален");
+                }
+            }
+
         }
     }
 }

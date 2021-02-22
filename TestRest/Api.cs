@@ -27,7 +27,7 @@ namespace TestRest
             var result = client.PostAsync(uri, content).Result;
 
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
-            throw new Exception($"Failed to POST data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Failed to POST data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
 
             return result;
         }
@@ -37,7 +37,7 @@ namespace TestRest
           
             var result = client.GetAsync(uri).Result;
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new Exception($"Failed to POST data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Failed to GET data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
 
             return result;
         }

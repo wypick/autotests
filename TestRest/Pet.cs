@@ -15,15 +15,21 @@ namespace TestRest
         static public Pet pet;
 
 
-        static public Pet GetPet()
+        static public Pet GetPet(string condition = null)
         {
-            GeneratePet();
+            if (condition != null)
+            {
+                GeneratePet(condition);
+            }
+            else
+                GeneratePet();
+
             pet = new Pet { Id = id, Category = category, Name = name, PhotoUrls = photoUrls, Tags = tags, Status = status };
            
             return pet;
         }
 
-        static public void GeneratePet()
+        static public void GeneratePet(string condition = null)
         {
             Random rnd = new Random();
 
@@ -38,8 +44,15 @@ namespace TestRest
             Tag tag = new Tag { Id = rnd.Next(0, 100000000), Name = GenerateString(10, rnd) };
             tags = new List<Tag> { tag };
 
-            string[] statuses = { "available", "pending", "sold" };
-            status = statuses[rnd.Next(statuses.Length)];
+            if (condition != null)
+            {
+                status = condition;
+            }
+            else
+            {
+                string[] statuses = { "available", "pending", "sold" };
+                status = statuses[rnd.Next(statuses.Length)];
+            }
         }
 
         public static string GenerateString(int length, Random random)

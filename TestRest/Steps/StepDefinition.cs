@@ -7,44 +7,59 @@ using TechTalk.SpecFlow;
 using System.IO;
 using TestRest;
 using System.Text.Json;
+using System.Net.Http;
 
 namespace TestRest.Steps
 {
     [Binding]
     public sealed class StepDefinition
     {
-        // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
+        public string Data;
+        public HttpResponseMessage response;
+        public string addedPet;
 
-        private readonly ScenarioContext _scenarioContext;
-
-        public StepDefinition(ScenarioContext scenarioContext)
+        [Given(@"add pet with status ""(.*)""")]
+        public void GivenAddPetWithStatus(string status)
         {
-            _scenarioContext = scenarioContext;
+            Data = JsonSerializer.Serialize(Pets.GetPet(status)).ToLower();
+
+            response = Api.Post(Api.GetUri(Api.addPet), Data);
+            addedPet = response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"get animals with status ""(.*)""")]
         public void GivenGetAnimalsWithStatus(string status)
         {
-            var response = Api.Get(Api.GetUri(Api.findByStatus+status));
+            response = Api.Get(Api.GetUri(Api.findByStatus+status));
         }
 
-        public string Data;
+        [Given(@"check contain pet")]
+        public void GivenCheckContainPet()
+        {
+            if (!response.Content.ReadAsStringAsync().Result.Contains(addedPet))
+            {
+                throw new Exception($"Добавленного животного: {Pets.pet.Id} не найдено в {response.Content.ReadAsStringAsync().Result}");
+            }
+        }
 
         [Given(@"add pet")]
         public void GivenAddPet()
         {
             Data = JsonSerializer.Serialize(Pets.GetPet()).ToLower();
 
-            var response = Api.Post(Api.GetUri(Api.addPet), Data);
-            Console.WriteLine(response); 
+            response = Api.Post(Api.GetUri(Api.addPet), Data);
+            addedPet = response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"check adding pet")]
         public void GivenCheckAddingPet()
         {
-            var response = Api.Get(Api.GetUri(Api.getPet+Pets.pet.Id));
+            response = Api.Get(Api.GetUri(Api.getPet+Pets.pet.Id));
 
-            response.Content.ReadAsStringAsync().Result.Equals(Data);
+            if (!response.Content.ReadAsStringAsync().Result.Equals(addedPet))
+            {
+                throw new Exception($"Добавленного животного: {Pets.pet.Id} не найдено в {response.Content.ReadAsStringAsync().Result}");
+            }
         }
 
     }

@@ -12,12 +12,15 @@ namespace TestRest
         static List<string> photoUrls;
         static List<Tag> tags;
         static string status;
+        static public Pet pet;
+
 
         static public Pet GetPet()
         {
             GeneratePet();
-
-            return new Pet { Id = id, Category = category, Name = name, PhotoUrls = photoUrls, Tags = tags, Status = status };
+            pet = new Pet { Id = id, Category = category, Name = name, PhotoUrls = photoUrls, Tags = tags, Status = status };
+           
+            return pet;
         }
 
         static public void GeneratePet()

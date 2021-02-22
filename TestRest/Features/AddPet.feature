@@ -4,3 +4,4 @@
 @mytag
 Scenario: Добавление животного
 	* add pet
+	* check adding pet

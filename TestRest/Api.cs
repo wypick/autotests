@@ -12,6 +12,8 @@ namespace TestRest
         public static string findByStatus = "pet/findByStatus?status=";
         public static string addPet = "pet";
         public static string getPet = "pet/";
+        public static string addOrder = "store/order";
+        public static string getOrder = "store/order/";
 
         public static string host = "petstore.swagger.io/v2";
 
@@ -59,11 +61,8 @@ namespace TestRest
 
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new Exception($"Failed to GET data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
-
+          
             return result;
         }
-
-
-
     }
 }

@@ -25,4 +25,14 @@ namespace TestRest
         public int Id { get; set; }
         public string Name { get; set; }
     }
+
+    public struct Order
+    {
+        public int id { get; set; }
+        public int petId { get; set; }
+        public int quantity { get; set; }
+        public DateTime shipDate { get; set; }
+        public string status { get; set; }
+        public bool complete { get; set; }
+    }
 }

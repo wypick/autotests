@@ -9,5 +9,6 @@ namespace TestRest
     [Binding]
     class Hooks
     {
+
     }
 }

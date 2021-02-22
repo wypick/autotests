@@ -32,15 +32,38 @@ namespace TestRest
             return result;
         }
 
+        public static HttpResponseMessage Put(Uri uri, string json)
+        {
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = client.PutAsync(uri, content).Result;
+
+            if (result.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new Exception($"Failed to PUT data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
+
+            return result;
+        }
+
+        public static HttpResponseMessage Delete(Uri uri)
+        {
+            var result = client.DeleteAsync(uri).Result;
+
+            if (result.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new Exception($"Failed to Delete data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
+
+            return result;
+        }
+
         public static HttpResponseMessage Get(Uri uri)
         {
-          
             var result = client.GetAsync(uri).Result;
+
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new Exception($"Failed to GET data: ({result.StatusCode}): {result.Content.ReadAsStringAsync().Result}");
 
             return result;
         }
+
+
 
     }
 }

@@ -49,18 +49,47 @@ namespace TestRest.Steps
 
             response = Api.Post(Api.GetUri(Api.addPet), Data);
             addedPet = response.Content.ReadAsStringAsync().Result;
+            Console.Write(addedPet);
         }
 
-        [Given(@"check adding pet")]
-        public void GivenCheckAddingPet()
+        [Given(@"check pet")]
+        public void GivenCheckPet()
         {
             response = Api.Get(Api.GetUri(Api.getPet+Pets.pet.Id));
 
             if (!response.Content.ReadAsStringAsync().Result.Equals(addedPet))
             {
-                throw new Exception($"Добавленного животного: {Pets.pet.Id} не найдено в {response.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Животное: id {Pets.pet.Id} не равно {response.Content.ReadAsStringAsync().Result}");
             }
         }
 
+        [Given(@"check deleted pet")]
+        public void GivenCheckDeletedPet()
+        {
+             try
+             {
+                 response = Api.Get(Api.GetUri(Api.getPet + Pets.pet.Id));
+             }
+             catch (Exception) { }
+             finally
+             {
+                 throw new Exception($"Животное: id {Pets.pet.Id} не удалено");
+             }
+        }
+
+        [Given(@"update pet")]
+        public void GivenUpdatePet()
+        {
+            Data = JsonSerializer.Serialize(Pets.UpdatePet()).ToLower();
+            response = Api.Put(Api.GetUri(Api.addPet), Data);
+            addedPet = response.Content.ReadAsStringAsync().Result;
+            Console.Write(addedPet);
+        }
+
+        [Given(@"delete pet")]
+        public void GivenDeletePet()
+        {
+            response = Api.Delete(Api.GetUri(Api.getPet+Pets.pet.Id));
+        }
     }
 }

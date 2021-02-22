@@ -29,6 +29,14 @@ namespace TestRest
             return pet;
         }
 
+        static public Pet UpdatePet()
+        {
+            Random rnd = new Random();
+            pet.Name = GenerateString(10, rnd);
+
+            return pet;
+        }
+
         static public void GeneratePet(string condition = null)
         {
             Random rnd = new Random();

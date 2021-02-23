@@ -6,16 +6,10 @@ using TechTalk.SpecFlow.UnitTestProvider;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.UnitTestProvider;
 
 namespace TestRest
 {
@@ -38,6 +32,12 @@ namespace TestRest
             WebDriver = new WebDriver(20);
         }
 
+        [BeforeScenario]
+        static public void BeforeScenario()
+        {
+            Context.Init();
+        }
+
         [AfterScenario("gui")]
         static public void AfterScenarioGui()
         {
@@ -55,7 +55,6 @@ namespace TestRest
                 }
                 catch (Exception) { }
             }
-
         }
     }
 }

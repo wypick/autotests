@@ -10,10 +10,8 @@ namespace TestRest
     {
         static readonly HttpClient client = new HttpClient();
         public static string findByStatus = "pet/findByStatus?status=";
-        public static string addPet = "pet";
-        public static string getPet = "pet/";
-        public static string addOrder = "store/order";
-        public static string getOrder = "store/order/";
+        public static string pet = "pet";
+        public static string order = "store/order";
 
         public static string host = "petstore.swagger.io/v2";
 

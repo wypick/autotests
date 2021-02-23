@@ -8,6 +8,9 @@ using System.IO;
 using TestRest;
 using System.Text.Json;
 using System.Net.Http;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace TestRest.Steps
 {
@@ -134,7 +137,23 @@ namespace TestRest.Steps
                     throw new Exception($"Заказ: id {Store.order.id} не удален");
                 }
             }
+        }
 
+        [Given(@"check chrome")]
+        public void GivenCheckChrome()
+        {
+            WebDriver.Driver.Navigate().GoToUrl("https://www.ya.ru/");
+
+            try
+            {
+                WebDriver.Driver.FindElement(By.XPath("//div//input[@id='text']"));
+            }
+            catch (NoSuchElementException)
+            {
+                throw new Exception($"Заказ: idдален");
+            }
+
+            WebDriver.Driver.Close();
         }
     }
 }

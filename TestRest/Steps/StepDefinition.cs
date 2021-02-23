@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 using TechTalk.SpecFlow;
-using System.IO;
-using TestRest;
 using System.Text.Json;
-using System.Net.Http;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace TestRest.Steps
 {
@@ -18,52 +9,48 @@ namespace TestRest.Steps
     public sealed class StepDefinition
     {
         public string Data;
-        public HttpResponseMessage response;
-        public string addedPet;
-        public string addedOrder;
 
         [Given(@"add pet with status ""(.*)""")]
         public void GivenAddPetWithStatus(string status)
         {
-            Data = JsonSerializer.Serialize(Pets.GetPet(status)).ToLower();
+            Context.Pet = new Pet(status);
 
-            response = Api.Post(Api.GetUri(Api.addPet), Data);
-            addedPet = response.Content.ReadAsStringAsync().Result;
+            Context.Response = Api.Post(Api.GetUri(Api.pet), JsonSerializer.Serialize(Context.Pet).ToLower());
+            Context.AddedPet = Context.Response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"get animals with status ""(.*)""")]
         public void GivenGetAnimalsWithStatus(string status)
         {
-            response = Api.Get(Api.GetUri(Api.findByStatus+status));
+            Context.Response = Api.Get(Api.GetUri(Api.findByStatus+status));
         }
 
         [Given(@"check contain pet")]
         public void GivenCheckContainPet()
         {
-            if (!response.Content.ReadAsStringAsync().Result.Contains(addedPet))
+            if (!Context.Response.Content.ReadAsStringAsync().Result.Contains(Context.AddedPet))
             {
-                throw new Exception($"Добавленного животного: {Pets.pet.Id} не найдено в {response.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Добавленного животного: {Context.Pet.Id} не найдено в {Context.Response.Content.ReadAsStringAsync().Result}");
             }
         }
 
         [Given(@"add pet")]
         public void GivenAddPet()
         {
-            Data = JsonSerializer.Serialize(Pets.GetPet()).ToLower();
+            Context.Pet = new Pet();
 
-            response = Api.Post(Api.GetUri(Api.addPet), Data);
-            addedPet = response.Content.ReadAsStringAsync().Result;
-            Console.Write(addedPet);
+            Context.Response = Api.Post(Api.GetUri(Api.pet), JsonSerializer.Serialize(Context.Pet).ToLower());
+            Context.AddedPet = Context.Response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"check pet")]
         public void GivenCheckPet()
         {
-            response = Api.Get(Api.GetUri(Api.getPet+Pets.pet.Id));
+            Context.Response = Api.Get(Api.GetUri(Api.pet + '/' + Context.Pet.Id));
 
-            if (!response.Content.ReadAsStringAsync().Result.Equals(addedPet))
+            if (!Context.Response.Content.ReadAsStringAsync().Result.Equals(Context.AddedPet))
             {
-                throw new Exception($"Животное: id {Pets.pet.Id} не равно {response.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Животное: id {Context.Pet.Id} не равно {Context.Response.Content.ReadAsStringAsync().Result}");
             }
         }
 
@@ -72,14 +59,14 @@ namespace TestRest.Steps
         {
             try
             {
-                response = Api.Get(Api.GetUri(Api.getPet + Pets.pet.Id));
+                Context.Response = Api.Get(Api.GetUri(Api.pet + '/' + Context.Pet.Id));
                 throw new Exception("error");
             }
             catch (Exception e)
             {
                 if (e.Message == "error")
                 {
-                    throw new Exception($"Животное: id {Store.order.id} не удалено");
+                    throw new Exception($"Животное: id {Context.Order.id} не удалено");
                 }
             }
         }
@@ -87,40 +74,40 @@ namespace TestRest.Steps
         [Given(@"update pet")]
         public void GivenUpdatePet()
         {
-            Data = JsonSerializer.Serialize(Pets.UpdatePet()).ToLower();
-            response = Api.Put(Api.GetUri(Api.addPet), Data);
-            addedPet = response.Content.ReadAsStringAsync().Result;
+            Pet.UpdatePet();
+            Context.Response = Api.Put(Api.GetUri(Api.pet), JsonSerializer.Serialize(Context.Pet).ToLower());
+            Context.AddedPet = Context.Response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"delete pet")]
         public void GivenDeletePet()
         {
-            response = Api.Delete(Api.GetUri(Api.getPet+Pets.pet.Id));
+            Context.Response = Api.Delete(Api.GetUri(Api.pet + '/' + Context.Pet.Id));
         }
 
         [Given(@"create order")]
         public void GivenCreateOrder()
         {
-            Data = JsonSerializer.Serialize(Store.GetOrder(Pets.pet.Id));
-            response = Api.Post(Api.GetUri(Api.addOrder), Data);
-            addedOrder = response.Content.ReadAsStringAsync().Result;
+            Context.Order = new Order();
+            Context.Response = Api.Post(Api.GetUri(Api.order), JsonSerializer.Serialize(Context.Order));
+            Context.AddedOrder = Context.Response.Content.ReadAsStringAsync().Result;
         }
 
         [Given(@"check order")]
         public void GivenCheckOrder()
         {
-            response = Api.Get(Api.GetUri(Api.getOrder + Store.order.id));
+            Context.Response = Api.Get(Api.GetUri(Api.order + '/' + Context.Order.id));
 
-            if (!response.Content.ReadAsStringAsync().Result.Equals(addedOrder))
+            if (!Context.Response.Content.ReadAsStringAsync().Result.Equals(Context.AddedOrder))
             {
-                throw new Exception($"Заказ: id {Store.order.id} не равен {response.Content.ReadAsStringAsync().Result}");
+                throw new Exception($"Заказ: id {Context.Order.id} не равен {Context.Response.Content.ReadAsStringAsync().Result}");
             }
         }
 
         [Given(@"delete order")]
         public void GivenDeleteOrder()
         {
-            response = Api.Delete(Api.GetUri(Api.getOrder + Store.order.id));
+            Context.Response = Api.Delete(Api.GetUri(Api.order + '/' + Context.Order.id));
         }
 
         [Given(@"check deleted order")]
@@ -128,13 +115,13 @@ namespace TestRest.Steps
         {
             try
             {
-                response = Api.Get(Api.GetUri(Api.getOrder + Store.order.id));
+                Context.Response = Api.Get(Api.GetUri(Api.order + '/' + Context.Order.id));
                 throw new Exception("error");
             }
             catch (Exception e) {
                if (e.Message == "error")
                 {
-                    throw new Exception($"Заказ: id {Store.order.id} не удален");
+                    throw new Exception($"Заказ: id {Context.Order.id} не удален");
                 }
             }
         }
@@ -150,7 +137,7 @@ namespace TestRest.Steps
             }
             catch (NoSuchElementException)
             {
-                throw new Exception($"Заказ: idдален");
+                throw new Exception("Элемент не найден");
             }
 
             WebDriver.Driver.Close();

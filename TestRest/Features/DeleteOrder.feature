@@ -1,6 +1,6 @@
 ﻿Feature: Delete Order
 
-@mytag
+@mytag @all
 Scenario: Удаление заказа на животное
 	* add pet
 	* create order

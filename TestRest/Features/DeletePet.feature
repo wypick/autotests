@@ -1,7 +1,7 @@
 ﻿Feature: Delete Pet
 	Simple calculator for adding two numbers
 
-@mytag
+@mytag @all
 Scenario: Удаление животного
 	* add pet
 	* delete pet

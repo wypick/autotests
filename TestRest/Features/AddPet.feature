@@ -1,6 +1,6 @@
 ﻿Feature: Add pet
 
-@mytag
+@mytag @all
 Scenario: Добавление животного
 	* add pet
 	* check pet

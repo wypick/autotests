@@ -1,6 +1,6 @@
 ﻿Feature: Update Pet
 	
-@mytag
+@mytag @all
 Scenario: Обновить информацию по животному
 	* add pet
 	* update pet

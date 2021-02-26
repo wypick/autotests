@@ -14,18 +14,6 @@ namespace TestRest
         public static string AddedOrder { get; set; }
         public static HttpResponseMessage Response { get; set; }
 
-    public struct Category
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
-        public struct Tag
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
         public static void Init()
         {
             Rnd = new Random();

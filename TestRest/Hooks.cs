@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.UnitTestProvider;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.UnitTestProvider;
+using Allure.Commons;
 
 namespace TestRest
 {
@@ -36,6 +37,14 @@ namespace TestRest
         static public void BeforeScenario()
         {
             Context.Init();
+        }
+
+        [BeforeStep]
+        static public void BeforeStep()
+        {
+            Logger.Blue("Step: " + ScenarioContext.Current.StepContext.StepInfo.Text);
+            if (ScenarioContext.Current.ScenarioInfo.Tags.Contains("gui"))
+                Thread.Sleep(500);
         }
 
         [AfterScenario("gui")]

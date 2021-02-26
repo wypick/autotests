@@ -2,6 +2,7 @@
 using TechTalk.SpecFlow;
 using System.Text.Json;
 using OpenQA.Selenium;
+using Allure.Commons;
 
 namespace TestRest.Steps
 {
@@ -137,10 +138,11 @@ namespace TestRest.Steps
             }
             catch (NoSuchElementException)
             {
+                AllureLifecycle.Instance.AddAttachment("Error_Screenshot", "image/png", ((ITakesScreenshot)WebDriver.Driver).GetScreenshot().AsByteArray);
                 throw new Exception("Элемент не найден");
             }
 
-            WebDriver.Driver.Close();
+           WebDriver.Driver.Close();
         }
     }
 }

@@ -76,10 +76,12 @@ namespace TestRest.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Удаление животного")]
         [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("all")]
         public virtual void УдалениеЖивотного()
         {
             string[] tagsOfScenario = new string[] {
-                    "mytag"};
+                    "mytag",
+                    "all"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Удаление животного", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 5

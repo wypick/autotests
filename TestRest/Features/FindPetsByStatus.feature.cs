@@ -76,13 +76,15 @@ namespace TestRest.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Получить животное по статусу")]
         [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("all")]
         [NUnit.Framework.TestCaseAttribute("available", null)]
         [NUnit.Framework.TestCaseAttribute("pending", null)]
         [NUnit.Framework.TestCaseAttribute("sold", null)]
         public virtual void ПолучитьЖивотноеПоСтатусу(string value, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag"};
+                    "mytag",
+                    "all"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));

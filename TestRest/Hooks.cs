@@ -10,7 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.UnitTestProvider;
-using Allure.Commons;
+using System.Data.SqlClient;
+//using Allure.Commons;
 
 namespace TestRest
 {
@@ -24,7 +25,6 @@ namespace TestRest
         static public void BeforeTestRun()
         {
             KillAllChromeDrivers();
-           // Config.InitializeEnvironment();
         }
 
         [BeforeScenario("gui")]
@@ -42,9 +42,31 @@ namespace TestRest
         [BeforeStep]
         static public void BeforeStep()
         {
-            Logger.Blue("Step: " + ScenarioContext.Current.StepContext.StepInfo.Text);
-            if (ScenarioContext.Current.ScenarioInfo.Tags.Contains("gui"))
-                Thread.Sleep(500);
+
+        }
+
+        [AfterStep]
+        static public void AfterStep()
+        {
+            DateTime date = DateTime.Now;
+            string time = date.ToString("yyyy-MM-dd HH:mm:ss");
+            string result = "passed";
+            string error = null;
+            if (ScenarioContext.Current.TestError != null)
+            {
+                error = ScenarioContext.Current.TestError.Message;
+                result = "failed";
+            }
+
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=DB; Integrated Security = True; Persist Security Info = False; Pooling = False; MultipleActiveResultSets = False; Connect Timeout = 60; Encrypt = False; TrustServerCertificate = True"))
+            {
+                connection.Open();
+                string sql = $@"INSERT INTO [dbo].[Log] ([TimeLog], [Name], [Step], [Result], [Error]) VALUES ('{time}', '{ScenarioContext.Current.ScenarioInfo.Title}', '{ScenarioContext.Current.StepContext.StepInfo.Text}', '{result}', '{error}')";
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         [AfterScenario("gui")]

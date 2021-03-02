@@ -48,8 +48,9 @@ namespace TestRest
         [AfterStep]
         static public void AfterStep()
         {
-           /* DateTime date = DateTime.Now;
-            string time = date.ToString("yyyy-MM-dd HH:mm:ss");
+          /*  DateTime date = DateTime.Now;
+            string time = date.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
             string result = "passed";
             string error = null;
             if (ScenarioContext.Current.TestError != null)
@@ -61,7 +62,7 @@ namespace TestRest
             using (SqlConnection connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=DB; Integrated Security = True; Persist Security Info = False; Pooling = False; MultipleActiveResultSets = False; Connect Timeout = 60; Encrypt = False; TrustServerCertificate = True"))
             {
                 connection.Open();
-                string sql = $@"INSERT INTO [dbo].[Log] ([TimeLog], [Name], [Step], [Result], [Error]) VALUES ('{time}', '{ScenarioContext.Current.ScenarioInfo.Title}', '{ScenarioContext.Current.StepContext.StepInfo.Text}', '{result}', '{error}')";
+                string sql = $@"INSERT INTO [dbo].[Log] ([TimeLog], [Name], [Step], [Result], [Error]) VALUES ('{time}', N'{ScenarioContext.Current.ScenarioInfo.Title}', '{ScenarioContext.Current.StepContext.StepInfo.Text}', '{result}', '{error}')";
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
                     cmd.ExecuteNonQuery();

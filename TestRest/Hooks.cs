@@ -48,7 +48,7 @@ namespace TestRest
         [AfterStep]
         static public void AfterStep()
         {
-            DateTime date = DateTime.Now;
+           /* DateTime date = DateTime.Now;
             string time = date.ToString("yyyy-MM-dd HH:mm:ss");
             string result = "passed";
             string error = null;
@@ -66,7 +66,7 @@ namespace TestRest
                 {
                     cmd.ExecuteNonQuery();
                 }
-            }
+            }*/
         }
 
         [AfterScenario("gui")]

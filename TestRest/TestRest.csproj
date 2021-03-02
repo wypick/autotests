@@ -36,4 +36,8 @@
     </Compile>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="rd /S /Q &quot;$(TargetDir)&quot;&#xD;&#xA;xcopy /E /S /Y /I /Q &quot;$(ProjectDir)Helpers&quot; &quot;$(TargetDir)Helpers&quot;" />
+  </Target>
+
 </Project>

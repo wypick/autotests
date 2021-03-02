@@ -67,7 +67,7 @@ namespace TestRest
                 {
                     cmd.ExecuteNonQuery();
                 }
-            }*/
+            } */
         }
 
         [AfterScenario("gui")]

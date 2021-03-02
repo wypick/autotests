@@ -20,6 +20,7 @@ namespace TestRest
             };
             options.AddArgument("--start-maximized");
             options.AddArgument("--remote-debugging-port=9222");
+            options.AddArgument("--allowed-ips=127.0.0.1");
             options.AddArgument("window-size=1920,1080");
 
             Driver = new ChromeDriver(Config.BasePath, options);

@@ -10,6 +10,13 @@ namespace TestRest
     {
         public static TimeSpan WebDriverWait { get; set; } = TimeSpan.FromSeconds(30);
         public static string BasePath = new FileInfo(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath).DirectoryName;
+        public static bool DbLogEnable { get; private set; }
+
+        public static void InitializeEnvironment()
+        {
+            DbLogEnable = Environment.GetEnvironmentVariable("DbLogEnable") != "false";
+        }
+
     }
 }
 

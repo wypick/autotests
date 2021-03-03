@@ -107,6 +107,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
  testRunner.And("add pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
 #line hidden
+#line 7
+ testRunner.And("delete pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+#line hidden
 #line 8
  testRunner.And("check deleted pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
 #line hidden

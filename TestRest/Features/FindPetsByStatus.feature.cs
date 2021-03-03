@@ -75,7 +75,7 @@ namespace TestRest.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Получить животное по статусу")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("findPetsByStatus")]
         [NUnit.Framework.CategoryAttribute("all")]
         [NUnit.Framework.TestCaseAttribute("available", null)]
         [NUnit.Framework.TestCaseAttribute("pending", null)]
@@ -83,7 +83,7 @@ namespace TestRest.Features
         public virtual void ПолучитьЖивотноеПоСтатусу(string value, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag",
+                    "findPetsByStatus",
                     "all"};
             if ((exampleTags != null))
             {

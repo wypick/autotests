@@ -77,11 +77,13 @@ namespace TestRest.Features
         [NUnit.Framework.DescriptionAttribute("Проверка работы Chrome")]
         [NUnit.Framework.CategoryAttribute("gui")]
         [NUnit.Framework.CategoryAttribute("all")]
+        [NUnit.Framework.CategoryAttribute("checkChrome")]
         public virtual void ПроверкаРаботыChrome()
         {
             string[] tagsOfScenario = new string[] {
                     "gui",
-                    "all"};
+                    "all",
+                    "checkChrome"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Проверка работы Chrome", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4

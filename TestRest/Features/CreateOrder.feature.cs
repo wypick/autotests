@@ -75,12 +75,12 @@ namespace TestRest.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Создание заказа на животное")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("createOrder")]
         [NUnit.Framework.CategoryAttribute("all")]
         public virtual void СозданиеЗаказаНаЖивотное()
         {
             string[] tagsOfScenario = new string[] {
-                    "mytag",
+                    "createOrder",
                     "all"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Создание заказа на животное", null, tagsOfScenario, argumentsOfScenario, this._featureTags);

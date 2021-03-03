@@ -67,7 +67,7 @@ namespace TestRest.Steps
             {
                 if (e.Message == "error")
                 {
-                    throw new Exception($"Животное: id {Context.Order.id} не удалено");
+                    throw new Exception($"Животное: id {Context.Pet.Id} не удалено");
                 }
             }
         }

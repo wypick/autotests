@@ -65,7 +65,7 @@ namespace TestRest
                 using (SqlConnection connection = new SqlConnection(@"Data Source=wypick.database.windows.net;Initial Catalog=DB;User ID=wypick;Password=cnTgFyJdBx3010;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
                 {
                     connection.Open();
-                    string sql = $@"INSERT INTO [dbo].[Log] ([TimeLog], [Name], [Step], [Result], [Error]) VALUES ('{time}', N'{ScenarioContext.Current.ScenarioInfo.Title}', '{ScenarioContext.Current.StepContext.StepInfo.Text}', '{result}', 'N{error}')";
+                    string sql = $@"INSERT INTO [dbo].[Log] ([TimeLog], [Name], [Step], [Result], [Error]) VALUES ('{time}', N'{ScenarioContext.Current.ScenarioInfo.Title}', '{ScenarioContext.Current.StepContext.StepInfo.Text}', '{result}', N'{error}')";
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
                         cmd.ExecuteNonQuery();

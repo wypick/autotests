@@ -75,12 +75,12 @@ namespace TestRest.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Удаление животного")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("deletePet")]
         [NUnit.Framework.CategoryAttribute("all")]
         public virtual void УдалениеЖивотного()
         {
             string[] tagsOfScenario = new string[] {
-                    "mytag",
+                    "deletePet",
                     "all"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Удаление животного", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
@@ -106,9 +106,6 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
 #line 6
  testRunner.And("add pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
-#line hidden
-#line 7
- testRunner.And("delete pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
 #line hidden
 #line 8
  testRunner.And("check deleted pet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");

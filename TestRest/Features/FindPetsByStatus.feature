@@ -1,6 +1,6 @@
 ﻿Feature: FindPetsByStatus
 
-@mytag @all
+@findPetsByStatus @all
 Scenario Outline: Получить животное по статусу
 	* add pet with status "<value>"
 	* get animals with status "<value>"

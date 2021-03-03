@@ -1,6 +1,6 @@
 ﻿Feature: Create Order
 
-@mytag @all
+@createOrder @all
 Scenario: Создание заказа на животное
 	* add pet
 	* create order

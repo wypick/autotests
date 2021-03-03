@@ -1,5 +1,5 @@
 ﻿Feature: Check Chrome
 
-@gui @all
+@gui @all @checkChrome
 Scenario: Проверка работы Chrome
 	* check chrome
